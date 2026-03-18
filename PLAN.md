@@ -172,13 +172,17 @@ The simulation is intentionally simple — like Loopy:
 
 ## Implementation Phases
 
-### Phase 1: Project Scaffolding
-- Initialize Next.js 15 with App Router, TypeScript, Tailwind, ESLint
-- Set up Prisma with PostgreSQL schema
-- Configure Auth.js v5 with Google provider
-- Create basic layout (header with sign-in/out, minimal landing page)
-- Set up `.env.example` with required vars
-- **Files**: `package.json`, `prisma/schema.prisma`, `src/lib/auth.ts`, `src/lib/db.ts`, `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/api/auth/[...nextauth]/route.ts`
+### Phase 1: Project Scaffolding ✅
+- ✅ Initialize Next.js 15 (16.1.7) with App Router, TypeScript, Tailwind CSS 4, ESLint
+- ✅ Set up Prisma 7 with PostgreSQL schema (User, Account, Session, Diagram models)
+- ✅ Configure Auth.js v5 with Google provider and Prisma adapter
+- ✅ Create root layout with Header component (sign-in/out button, app branding)
+- ✅ Create landing page with hero section, feature cards, and sign-in CTA
+- ✅ Set up `.env.example` with required vars
+- ✅ Install React Flow v12, Zustand, shadcn/ui foundation (Button, Avatar components)
+- ✅ Create placeholder dashboard page (redirect target for authenticated users)
+- **Notes**: Using system fonts instead of Google Fonts (Geist). Prisma 7 requires `@prisma/adapter-pg` for PostgreSQL connections. shadcn/ui components created manually (registry unavailable).
+- **Files**: `package.json`, `prisma/schema.prisma`, `prisma.config.ts`, `src/lib/auth.ts`, `src/lib/db.ts`, `src/lib/utils.ts`, `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/dashboard/page.tsx`, `src/app/api/auth/[...nextauth]/route.ts`, `src/components/layout/Header.tsx`, `src/components/ui/button.tsx`, `src/components/ui/avatar.tsx`, `.env.example`
 
 ### Phase 2: Diagram CRUD + Dashboard
 - API routes: create, read, update, delete diagrams
