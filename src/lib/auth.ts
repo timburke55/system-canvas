@@ -11,4 +11,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/",
   },
+  callbacks: {
+    session({ session, user }) {
+      if (session.user && user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
 });

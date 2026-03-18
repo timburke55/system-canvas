@@ -184,11 +184,17 @@ The simulation is intentionally simple — like Loopy:
 - **Notes**: Using system fonts instead of Google Fonts (Geist). Prisma 7 requires `@prisma/adapter-pg` for PostgreSQL connections. shadcn/ui components created manually (registry unavailable).
 - **Files**: `package.json`, `prisma/schema.prisma`, `prisma.config.ts`, `src/lib/auth.ts`, `src/lib/db.ts`, `src/lib/utils.ts`, `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/dashboard/page.tsx`, `src/app/api/auth/[...nextauth]/route.ts`, `src/components/layout/Header.tsx`, `src/components/ui/button.tsx`, `src/components/ui/avatar.tsx`, `.env.example`
 
-### Phase 2: Diagram CRUD + Dashboard
-- API routes: create, read, update, delete diagrams
-- Dashboard page: list user's diagrams, create new, delete
-- Auto-save on diagram changes (debounced)
-- **Files**: `src/app/dashboard/page.tsx`, `src/app/api/diagrams/` routes, `src/lib/store.ts`
+### Phase 2: Diagram CRUD + Dashboard ✅
+- ✅ API routes: `POST /api/diagrams` (create), `GET /api/diagrams` (list), `GET /api/diagrams/[id]` (read), `PUT /api/diagrams/[id]` (update title/data/isPublic), `DELETE /api/diagrams/[id]`
+- ✅ All API routes enforce auth (check `session.user.id`) and ownership (filter by `userId`)
+- ✅ Dashboard page: server-side fetch of user's diagrams, sorted by `updatedAt` desc
+- ✅ Client-side `DiagramList` component: create new diagram (redirects to editor), delete with optimistic UI, card grid layout with hover actions
+- ✅ Zustand store (`src/lib/store.ts`): diagram state (nodes, edges, viewport, title), `onNodesChange`/`onEdgesChange` via React Flow helpers, auto-save with 1.5s debounce to `PUT /api/diagrams/[id]`
+- ✅ Auth callback added to include `user.id` in session
+- ✅ Diagram editor page stub at `/diagram/[id]` (placeholder for Phase 3 canvas)
+- ✅ shadcn/ui Card component added
+- **Notes**: Diagram editor page currently shows a placeholder; the React Flow canvas is Phase 3. Auto-save wiring to the editor will happen when the canvas is built.
+- **Files**: `src/app/api/diagrams/route.ts`, `src/app/api/diagrams/[id]/route.ts`, `src/app/dashboard/page.tsx`, `src/app/dashboard/diagram-list.tsx`, `src/app/diagram/[id]/page.tsx`, `src/lib/store.ts`, `src/lib/auth.ts`, `src/components/ui/card.tsx`
 
 ### Phase 3: Canvas Editor — Core CLD
 - React Flow canvas with custom `VariableNode` and `CausalEdge`
