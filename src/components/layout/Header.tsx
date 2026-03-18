@@ -39,6 +39,11 @@ export async function Header() {
         <div className="flex items-center gap-3">
           {session?.user ? (
             <>
+              <Link href="/dashboard">
+                <Button variant="ghost" size="sm">
+                  My Diagrams
+                </Button>
+              </Link>
               <Avatar>
                 {session.user.image && (
                   <AvatarImage

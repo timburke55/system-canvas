@@ -184,11 +184,15 @@ The simulation is intentionally simple — like Loopy:
 - **Notes**: Using system fonts instead of Google Fonts (Geist). Prisma 7 requires `@prisma/adapter-pg` for PostgreSQL connections. shadcn/ui components created manually (registry unavailable).
 - **Files**: `package.json`, `prisma/schema.prisma`, `prisma.config.ts`, `src/lib/auth.ts`, `src/lib/db.ts`, `src/lib/utils.ts`, `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/dashboard/page.tsx`, `src/app/api/auth/[...nextauth]/route.ts`, `src/components/layout/Header.tsx`, `src/components/ui/button.tsx`, `src/components/ui/avatar.tsx`, `.env.example`
 
-### Phase 2: Diagram CRUD + Dashboard
-- API routes: create, read, update, delete diagrams
-- Dashboard page: list user's diagrams, create new, delete
-- Auto-save on diagram changes (debounced)
-- **Files**: `src/app/dashboard/page.tsx`, `src/app/api/diagrams/` routes, `src/lib/store.ts`
+### Phase 2: Diagram CRUD + Dashboard ✅
+- ✅ API routes: create (`POST /api/diagrams`), read (`GET /api/diagrams`, `GET /api/diagrams/[id]`), update (`PUT /api/diagrams/[id]`), delete (`DELETE /api/diagrams/[id]`)
+- ✅ Dashboard page: list user's diagrams (sorted by last updated), create new, delete with confirmation
+- ✅ Zustand store for diagram state (nodes, edges, viewport, title) with React Flow change handlers
+- ✅ Auth-gated dashboard (redirects unauthenticated users to landing page)
+- ✅ Header updated with "My Diagrams" link for authenticated users
+- Auto-save on diagram changes will be wired up in Phase 3 when the canvas editor is built
+- **Notes**: Dashboard uses server component for initial data fetch + client component (`DiagramList`) for interactivity. API routes verify ownership via session email.
+- **Files**: `src/app/dashboard/page.tsx`, `src/app/dashboard/DiagramList.tsx`, `src/app/api/diagrams/route.ts`, `src/app/api/diagrams/[id]/route.ts`, `src/lib/store.ts`, `src/components/layout/Header.tsx` (updated)
 
 ### Phase 3: Canvas Editor — Core CLD
 - React Flow canvas with custom `VariableNode` and `CausalEdge`
